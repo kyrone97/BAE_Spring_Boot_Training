@@ -8,25 +8,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+//used for modelling data into tables(maps from java/spring into database tables)
+//will create the table in the database if it does not already exist
 @Entity
 public class User {
-	
+//	This makes the column a primary key
 	@Id
+//	This makes the column auto increment
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	// Creates a column called "firstname"
-	@Column(name = "firstname")
+	@Column(name = "firstname", nullable = false)
 	private String firstname;
 	
 	// Creates a column called "last_name"
-
+	@Column(name = "lastname", nullable = false)
 	private String lastname;
 	
 	// Creates a column called "username"
 	// This column CAN NOT be null
-	@Column(nullable = false)
+	@Column(unique = true, nullable = false, name = "username")
 	private String username;
 
 	// Default Constructor
