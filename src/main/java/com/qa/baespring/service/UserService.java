@@ -28,7 +28,18 @@ public class UserService {
 	}
 	
 	
-	//create a new user
+	//get by username
+		public User getByUsername(String username) {
+			return repo.findByUsername(username).get();
+	}
+		
+		
+	//get by age
+		public List<User> getByAge(int age) {
+			return repo.findByAge(age);
+	}
+	
+		
 	public User create(User myUser) {
 		return repo.saveAndFlush(myUser);
 	}
@@ -40,6 +51,7 @@ public class UserService {
 		existing.setFirstname(myUser.getFirstname()); // change the users first name to new user firstname
 		existing.setLastname(myUser.getLastname()); // change existing user last name to new user last name
 		existing.setUsername(myUser.getUsername()); // change existing user username to new user username
+		existing.setAge(myUser.getAge()); // change
 		return repo.saveAndFlush(existing);
 	
 	}

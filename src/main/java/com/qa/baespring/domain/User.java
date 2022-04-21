@@ -26,6 +26,10 @@ public class User {
 	@Column(name = "lastname", nullable = false)
 	private String lastname;
 	
+	//Creates a column called "age"
+	@Column(name = "age", nullable = false)
+	private int age;
+	
 	// Creates a column called "username"
 	// This column CAN NOT be null
 	@Column(unique = true, nullable = false, name = "username")
@@ -35,22 +39,27 @@ public class User {
 	public User() {}
 	
 	
+	
+
 	// Used for creating/inserting
-	public User(String firstname, String lastname, String username) {
+	public User(String firstname, String lastname, String username, int age) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.age = age;
 	}
 
 	// Used for reading/selecting (and testing)
-	public User(long id, String firstname, String lastname, String username) {
+	public User(long id, String firstname, String lastname, String username, int age) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.age = age;
 	}
+
 
 
 
@@ -72,6 +81,12 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -81,17 +96,20 @@ public class User {
 
 
 
+
+
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
-				+ "]";
+		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", age=" + age + ", username="
+				+ username + "]";
 	}
 
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstname, id, lastname, username);
+		return Objects.hash(age, firstname, id, lastname, username);
 	}
 
 
@@ -105,9 +123,12 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(firstname, other.firstname) && id == other.id && Objects.equals(lastname, other.lastname)
-				&& Objects.equals(username, other.username);
+		return age == other.age && Objects.equals(firstname, other.firstname) && id == other.id
+				&& Objects.equals(lastname, other.lastname) && Objects.equals(username, other.username);
 	}
+
+
+
 	
 	
 

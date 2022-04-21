@@ -40,6 +40,20 @@ public class UserController {
 		
 	}
 	
+	//Get by Username(get one user)
+	
+	@GetMapping("getByUsername/{username}") // localhost:8080/getByUsername/username
+	public ResponseEntity<User> getByUsername(@PathVariable String username) {
+		return new ResponseEntity<User>(service.getByUsername(username), HttpStatus.OK);
+	}
+	
+	//Get by age
+	
+	@GetMapping("getByAge/{age}") // localhost:8080/getByAge/age
+	public ResponseEntity<List<User>> getByAge(@PathVariable int age) {
+		return new ResponseEntity<List<User>>(service.getByAge(age), HttpStatus.OK);
+	}
+	
 	
 	// Post
 	@PostMapping("/create") // localhost:8080/create
