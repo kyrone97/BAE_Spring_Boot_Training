@@ -2,6 +2,8 @@ package com.qa.baespring.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +28,14 @@ public class UserController {
 
 	// Get
 	@GetMapping("/getById/{id}") // localhost:8080/getById
-	public User getById (@PathVariable long id) {
-		
-		return service.getById(id);
+	public ResponseEntity<User> getById (@PathVariable long id) {
+		return new ResponseEntity<User>(service.getById(id), HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/getAll") // localhost:8080/getAll
-	public List<User> getAll() {
-		return service.getAll();
+	public ResponseEntity<List<User>>getAll() {
+		return new ResponseEntity<List<User>>(service.getAll(),HttpStatus.OK);
 		
 		
 	}
@@ -42,8 +43,8 @@ public class UserController {
 	
 	// Post
 	@PostMapping("/create") // localhost:8080/create
-	public User create(@RequestBody User myUser) {
-		return service.create(myUser);
+	public ResponseEntity<User>create(@RequestBody User myUser) {
+		return new ResponseEntity<User>(service.create(myUser), HttpStatus.CREATED);
 		
 		
 	}
@@ -51,20 +52,19 @@ public class UserController {
 	
 	// Put
 	@PutMapping("/update/{id}") // localhost:8080/update/id
-	public User update(@PathVariable long id, @RequestBody User myUser) {
-		return service.update(id, myUser);
+	public ResponseEntity<User>update(@PathVariable long id, @RequestBody User myUser) {
+		return new ResponseEntity<User>(service.update(id, myUser),HttpStatus.CREATED);
 			
 	}
 	
 	
-	// Delete
+	// Delete//using a turnary if
 	@DeleteMapping("/delete/{id}") //localhost:8080/delete/id
-	public boolean delete(@PathVariable long id) {
-		return service.delete(id);
+	public ResponseEntity<Boolean> delete(@PathVariable long id) {
+		return (service.delete(id))? new ResponseEntity<Boolean>(HttpStatus.NO_CONTENT) : 
+			new ResponseEntity<Boolean>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	
-	
-	
-	
 }
+
+
+
