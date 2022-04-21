@@ -20,7 +20,8 @@ public interface UserRepo extends JpaRepository <User, Long > {
 	Optional<User> findByFirstname(String firstname);
 	
 	
-	// get by age
+	// get by age query
+	// dont need an optional if using a list because you cant recieve nothing in return would recieve an empty list but still a list so return isnt null
 	@Query(value = "SELECT * FROM user WHERE age = ?1", nativeQuery=true)
 	 List<User> findByAge(int age);
 	
