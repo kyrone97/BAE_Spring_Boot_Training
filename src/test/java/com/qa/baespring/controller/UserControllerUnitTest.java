@@ -6,13 +6,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -21,12 +25,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.baespring.domain.User;
+import com.qa.baespring.service.UserService;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Sql(scripts = {"classpath:testschema.sql", "classpath:testdata.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@ActiveProfiles("test")
-public class UserControllerIntegrationTest {
+@WebMvcTest
+public class UserControllerUnitTest {
 	
 
 	@Autowired
@@ -35,6 +37,9 @@ public class UserControllerIntegrationTest {
 	
 	@Autowired
 	private ObjectMapper mapper;
+	
+	@MockBean
+	private UserService service;
 	
 	
 	@Test // test are void because they dont return anything
@@ -45,6 +50,11 @@ public class UserControllerIntegrationTest {
 	
 	User result = new User(2L, "Jim", "Jones", "JJones1",24);
 	String resultAsJSON = mapper.writeValueAsString(result);
+	
+	
+	// Takes control of the mock service
+	// Tell it what to return
+	Mockito.when(service.create(entry)).thenReturn(result);
 	
 	mvc.perform(post("/user/create")
 			.contentType(MediaType.APPLICATION_JSON)
